@@ -1,27 +1,30 @@
+import { UsersService } from './users.service';
 import { CreateUserDTO } from './users.dto';
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
+  constructor(private usersService: UsersService) {}
+
   @Get()
-  index(): {} {
-    return {message: "users"}
+  index(): string {
+    return this.usersService.index()
   }
 
   @Get(':id')
   show(@Param() params): string {
     console.log(params.id)
-    return 'user'
+    return this.usersService.show()
   }
 
   @Post()
-  create(@Body() createUserDTO: CreateUserDTO): boolean {
+  create(@Body() createUserDTO: CreateUserDTO) {
     console.log(createUserDTO)
-    return true
+    this.usersService.create('user1')
   }
   
   @Put()
-  update(): string {
-    return 'update'
+  update() {
+    this.usersService.update('user2')
   }
 }

@@ -13,29 +13,33 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
+const users_service_1 = require("./users.service");
 const users_dto_1 = require("./users.dto");
 const common_1 = require("@nestjs/common");
 let UsersController = class UsersController {
+    constructor(usersService) {
+        this.usersService = usersService;
+    }
     index() {
-        return { message: "users" };
+        return this.usersService.index();
     }
     show(params) {
         console.log(params.id);
-        return 'user';
+        return this.usersService.show();
     }
     create(createUserDTO) {
         console.log(createUserDTO);
-        return true;
+        this.usersService.create('user1');
     }
     update() {
-        return 'update';
+        this.usersService.update('user2');
     }
 };
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", String)
 ], UsersController.prototype, "index", null);
 __decorate([
     (0, common_1.Get)(':id'),
@@ -49,16 +53,17 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [users_dto_1.CreateUserDTO]),
-    __metadata("design:returntype", Boolean)
+    __metadata("design:returntype", void 0)
 ], UsersController.prototype, "create", null);
 __decorate([
     (0, common_1.Put)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
+    __metadata("design:returntype", void 0)
 ], UsersController.prototype, "update", null);
 UsersController = __decorate([
-    (0, common_1.Controller)('users')
+    (0, common_1.Controller)('users'),
+    __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UsersController);
 exports.UsersController = UsersController;
 //# sourceMappingURL=users.controller.js.map

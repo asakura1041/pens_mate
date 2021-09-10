@@ -1,7 +1,10 @@
+import { UsersService } from './users.service';
 import { CreateUserDTO } from './users.dto';
 export declare class UsersController {
-    index(): {};
+    private usersService;
+    constructor(usersService: UsersService);
+    index(): string;
     show(params: any): string;
-    create(createUserDTO: CreateUserDTO): boolean;
-    update(): string;
+    create(createUserDTO: CreateUserDTO): void;
+    update(): void;
 }
