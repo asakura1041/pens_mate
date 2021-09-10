@@ -9,39 +9,48 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = void 0;
+exports.PostService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma.service");
-let UserService = class UserService {
+let PostService = class PostService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async findAll() {
-        return this.prisma.user.findMany();
-    }
-    async findOne(id) {
-        return this.prisma.user.findUnique({
-            where: { id: id }
+    async post(postWhereUniqueInput) {
+        return this.prisma.post.findUnique({
+            where: postWhereUniqueInput,
         });
     }
-    async create(data) {
-        return this.prisma.user.create({ data });
+    async posts(params) {
+        const { skip, take, cursor, where } = params;
+        return this.prisma.post.findMany({
+            skip,
+            take,
+            cursor,
+            where,
+        });
     }
-    async update(id, data) {
-        return this.prisma.user.update({
-            where: { id: id },
+    async createPost(data) {
+        return this.prisma.post.create({
             data,
         });
     }
-    async remove(id) {
-        return this.prisma.user.delete({
-            where: { id: id }
+    async updatePost(params) {
+        const { data, where } = params;
+        return this.prisma.post.update({
+            data,
+            where,
+        });
+    }
+    async deletePost(where) {
+        return this.prisma.post.delete({
+            where,
         });
     }
 };
-UserService = __decorate([
+PostService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
-], UserService);
-exports.UserService = UserService;
-//# sourceMappingURL=users.service.js.map
+], PostService);
+exports.PostService = PostService;
+//# sourceMappingURL=posts.service.js.map
